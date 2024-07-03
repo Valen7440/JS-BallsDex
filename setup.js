@@ -9,7 +9,8 @@ const template = `
 token: 
 
 # client ID of your application
-# example: 1253441398146076732
+# preferably place it as a string
+# example: "1253441398146076732"
 client-id:
 
 # add custom prefix

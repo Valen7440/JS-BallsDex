@@ -33,8 +33,9 @@ async function loadCommands(client){
         version: '10'
     }).setToken(config["token"]);
 
-    if (typeof config["client-id"] == "number") {
-        config["client-id"] = config["client-id"].toString();
+    var clientId = config["client-id"];
+    if (clientId == "number") {
+        clientId = config["client-id"].toString();
     }
 
     (async () => {
@@ -42,7 +43,7 @@ async function loadCommands(client){
             console.log('Started refreshing application (/) commands.');
 
             await rest.put(
-                Routes.applicationCommands(`${config["client-id"]}`), {
+                Routes.applicationCommands(clientId), {
                     body: client.slashArray
                 },
             );

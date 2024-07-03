@@ -33,6 +33,10 @@ async function loadCommands(client){
         version: '10'
     }).setToken(config["token"]);
 
+    if (typeof config["client-id"] == "number") {
+        config["client-id"] = config["client-id"].toString();
+    }
+
     (async () => {
         try {
             console.log('Started refreshing application (/) commands.');

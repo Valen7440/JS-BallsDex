@@ -70,7 +70,7 @@ module.exports = {
             const fileId = snowflake.generate(Date.now());
             const cardAttachment = new Discord.AttachmentBuilder(card, { name: `card_${fileId}.png` });
     
-            return await interaction.editReply({ files: [cardAttachment], content: `ID: \`#${currentBall.id.toString(16)}\`\nObtenido el <t:${currentBall.date ?? Math.round(Date.now() / 1000)}:F>${currentBall.trade ? `\nObtenido por tradeo con <@${currentBall.trade}>` : ""}\n\nHP: ${hp} (${currentBall.hp >= 0 ? "+" : ""}${currentBall.hp}%)\nATK: ${atk} (${currentBall.atk >= 0 ? "+" : ""}${currentBall.atk}%) ` });
+            return await interaction.editReply({ files: [cardAttachment], content: `ID: \`#${currentBall.id.toString(16)}\`\nCaught on <t:${currentBall.date ?? Math.round(Date.now() / 1000)}:F> (<t:${currentBall.date ?? Math.round(Date.now() / 1000)}:R>)${currentBall.trade ? `\nObtained by a trade with <@${currentBall.trade}>` : ""}\n\nHP: ${hp} (${currentBall.hp >= 0 ? "+" : ""}${currentBall.hp}%)\nATK: ${atk} (${currentBall.atk >= 0 ? "+" : ""}${currentBall.atk}%) ` });
         }
 
         if (subcommand == "last") {            
@@ -115,7 +115,7 @@ module.exports = {
             const fileId = snowflake.generate(Date.now());
             const cardAttachment = new Discord.AttachmentBuilder(card, { name: `card_${fileId}.png` });
             
-            return await interaction.editReply({ files: [cardAttachment], content: `ID: \`#${currentBall.id.toString(16)}\`\nObtenido el <t:${currentBall.date ?? Math.round(Date.now() / 1000)}:F>${currentBall.trade ? `\nObtenido por tradeo con <@${currentBall.trade}>` : ""}\n\nHP: ${hp} (${currentBall.hp >= 0 ? "+" : ""}${currentBall.hp}%)\nATK: ${atk} (${currentBall.atk >= 0 ? "+" : ""}${currentBall.atk}%) ` });
+            return await interaction.editReply({ files: [cardAttachment], content: `ID: \`#${currentBall.id.toString(16)}\`\nCaught on <t:${currentBall.date ?? Math.round(Date.now() / 1000)}:F> (<t:${currentBall.date ?? Math.round(Date.now() / 1000)}:R>)${currentBall.trade ? `\nObtained by a trade with <@${currentBall.trade}>` : ""}\n\nHP: ${hp} (${currentBall.hp >= 0 ? "+" : ""}${currentBall.hp}%)\nATK: ${atk} (${currentBall.atk >= 0 ? "+" : ""}${currentBall.atk}%) ` });
         }
 
         if (subcommand === "completion") {

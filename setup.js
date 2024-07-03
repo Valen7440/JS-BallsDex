@@ -2,7 +2,7 @@ const fs = require("node:fs");
 
 const template = `
 # JS BallsDex Configuration
-# made by Valen7440 and PwlDev
+# made by Valen7440 and PwLDev
 # original bot made by Laggron42
 
 # paste your token here
@@ -14,6 +14,16 @@ client-id:
 
 # add custom prefix
 prefix: b.
+
+# collectible name
+collectible-name: countryballs
+
+# bot name
+bot-name: BallsDex
+
+# override command name
+# /balls by default
+command-name: balls
 `
 
 console.log("We've installed the required dependencies.");

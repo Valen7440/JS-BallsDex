@@ -7,8 +7,8 @@ const { spawnManager } = require("../../utils/spawner.js");
  * @param {Discord.Client} client 
  */
 module.exports = client => {
-    console.log(`Se inició sesión como ${client.user.tag}`)
-    setTimeout(() => console.info(`El bot está conectado en ${client.guilds.cache.size} servidores.`), 15000)
+    console.log(`Logged in as ${client.user.tag}`)
+    setTimeout(() => console.info(`Connected in ${client.guilds.cache.size} guilds.`), 15000)
 
     spawnManager(client);
 }

@@ -2,12 +2,11 @@ const Discord = require("discord.js")
 const fs = require("fs")
 require("colors")
 
-const YAML = require("js-yaml")
-
 const BotUtils = require("./utils/loadFiles.js")
 const { loadEvents } = require("./handlers/events.js")
 const { loadCommands } = require("./handlers/slashCommands.js")
-const { loadPrefixCommands } = require("./handlers/commands.js")
+const { loadPrefixCommands } = require("./handlers/commands.js");
+const { config } = require("./handlers/config.js");
  
 const client = new Discord.Client({
     intents: [
@@ -18,18 +17,16 @@ const client = new Discord.Client({
     ],
     partials: [Discord.Partials.User, Discord.Partials.Channel, Discord.Partials.GuildMember, Discord.Partials.Message, Discord.Partials.Reaction],
     presence: {
-        status: "dnd",
+        status: "online",
         afk: false,
     }
 })
-
-const config = YAML.load(fs.readFileSync('./config.yml', 'utf-8'))
-// YAML.load(fs.readFileSync('./config.yml', 'utf-8'))
 
 client.commands = new Discord.Collection();
 client.slashcommands = new Discord.Collection();
 client.slashArray = [];
 client.utils = new BotUtils(client);
+client.config = config;
 
 loadEvents(client);
 loadCommands(client);

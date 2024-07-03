@@ -24,13 +24,13 @@ async function loadPrefixCommands(client) {
                 if (nombre_comando) client.commands.set(nombre_comando, comando);
 
             } catch (e) {
-                console.log(`❌ ERROR AL CARGAR EL ARCHIVO ${rutaArchivo} ❌` .red);
+                console.log(`❌ Error loading ${rutaArchivo} ❌` .red);
                 console.log(e)
             }
         })
     }
 
-    console.log(`(${config.prefix}) ${client.commands.size} comandos prefixes cargados.` .green)
+    console.log(`(${config.prefix}) ${client.commands.size} prefix commands loaded.` .green)
 }
 
 module.exports = { loadPrefixCommands }

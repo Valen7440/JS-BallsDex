@@ -1,7 +1,10 @@
 const Discord = require("discord.js")
 const { player } = require("../../handlers/database.js"); 
 const snowflake = require("@pwldev/discord-snowflake"); 
+
 const trades = {}; 
+
+const { config } = require("../../handlers/config.js");
 
 module.exports = {
     name: "trade",
@@ -10,10 +13,10 @@ module.exports = {
     args: false,
     cmd: new Discord.SlashCommandBuilder()
     .setName("trade")
-    .setDescription("BallsDex Trading")
+    .setDescription(`${config["bot-name"]} trading`)
     .addSubcommand(s => s.setName("begin").setDescription("Begin a trade with the chosen user.").addUserOption(u => u.setName("user").setDescription("The user you want to trade with").setRequired(true)))
-    .addSubcommand(s => s.setName("add").setDescription("Add a countryball to the ongoing trade.").addIntegerOption(i => i.setName("ball").setDescription("The countryball you want to add to your proposal").setAutocomplete(true).setRequired(true)))
-    .addSubcommand(s => s.setName("remove").setDescription("Remove a countryball from what you proposed in the ongoing trade.").addIntegerOption(i => i.setName("ball").setDescription("The countryball you want to add to your proposal").setAutocomplete(true).setRequired(true))),
+    .addSubcommand(s => s.setName("add").setDescription(`Add a ${config["collectible-name"]} to the ongoing trade.`).addIntegerOption(i => i.setName(config["collectible-name"]).setDescription(`The ${config["collectible-name"]} you want to add to your proposal`).setAutocomplete(true).setRequired(true)))
+    .addSubcommand(s => s.setName("remove").setDescription(`Remove a ${config["collectible-name"]} from what you proposed in the ongoing trade.`).addIntegerOption(i => i.setName(config["collectible-name"]).setDescription(`The ${config["collectible-name"]} you want to add to your proposal`).setAutocomplete(true).setRequired(true))),
     run: () => { return },
     /**
      * 
@@ -28,11 +31,11 @@ module.exports = {
             const trader2 = interaction.options.getUser("user", true);
 
             if (trader2.bot) {
-                return await interaction.reply({content: `No puedes tradear con bots.`, ephemeral: true})
+                return await interaction.reply({ content: `You can't trade with bots`, ephemeral: true });
             } 
 
             if (interaction.user === trader2) {
-                return await interaction.reply({content: `No puedes tradear contigo mismo.`})
+                return await interaction.reply({ content: `You can't trade with yourself.`, ephemeral: true  }); 
             }    
             
             const ongoingTrader1 = getTrade(interaction);
@@ -49,12 +52,8 @@ module.exports = {
             await interaction.deferReply();
 
             const embed = new Discord.EmbedBuilder()
-            .setTitle("BallsDex trading")
-            .setDescription(`
-            Add or remove countryballs you want to propose to the other player using the /trade add and /trade remove commands.\n
-            Once you're finished, click the lock button below to confirm your proposal.\n
-            You can also lock with nothing if you're receiving a gift.
-            `)
+            .setTitle(`${config["bot-name"]} trading`)
+            .setDescription(`Add or remove ${config["collectible-name"]}s you want to propose to the other player using the /trade add and /trade remove commands.\nOnce you're finished, click the lock button below to confirm your proposal.\nYou can also lock with nothing if you're receiving a gift.`)
             .setColor(Discord.Colors.Blurple)
             .setFooter({ text: "Interaction updates every 10 seconds." })
             .addFields(
@@ -105,13 +104,13 @@ module.exports = {
             var currentPlayer = await player.get(interaction.user.id);
     
             if (!currentPlayer) {
-                return await interaction.reply({ content: "You haven't collected any countryball yet." });
+                return await interaction.reply({ content: `You haven't collected any ${config["collectible-name"]} yet.`, ephemeral: true });
             }
             
             const currentBall = currentPlayer.find((b) => b.id == ballId);
 
             if (!currentBall) {
-                return await interaction.reply({ content: "That countryball was not found, try to use the autocomplete function.", ephemeral: true });
+                return await interaction.reply({ content: `That ${config["collectible-name"]} was not found, try to use the autocomplete function.`, ephemeral: true });
             }
 
             currentBall["trade"] = interaction.user.id;
@@ -135,7 +134,7 @@ module.exports = {
 
             const existingBall = trader.proposal.find((b) => b.id == ballId);
             if (existingBall) {
-                return await interaction.reply({ content: "You already added that countryball to your proposal.", ephemeral: true });
+                return await interaction.reply({ content: `You already added that ${config["collectible-name"]} to your proposal.`, ephemeral: true });
             }
 
             trader.proposal.push(currentBall);
@@ -148,13 +147,13 @@ module.exports = {
             var currentPlayer = await player.get(interaction.user.id);
     
             if (!currentPlayer) {
-                return await interaction.reply({ content: "You haven't collected any countryball yet." });
+                return await interaction.reply({ content: `You haven't collected any ${config["collectible-name"]} yet.` });
             }
             
             const currentBall = currentPlayer.find((b) => b.id == ballId);
 
             if (!currentBall) {
-                return await interaction.reply({ content: "That countryball was not found, try to use the autocomplete function.", ephemeral: true });
+                return await interaction.reply({ content: `That ${config["collectible-name"]} was not found, try to use the autocomplete function.`, ephemeral: true });
             }
 
 
@@ -176,7 +175,7 @@ module.exports = {
 
             const existingBall = trader.proposal.find((b) => b.id == ballId);
             if (!existingBall || existingBall == -1) {
-                return await interaction.reply({ content: "That countryball is not added to the proposal.", ephemeral: true });
+                return await interaction.reply({ content: `That ${config["collectible-name"]} is not added to the proposal.`, ephemeral: true });
             }
 
             trader.proposal.splice(existingBall, 1);

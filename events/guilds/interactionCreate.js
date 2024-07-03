@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 const { sendModal, performCatch, spawns } = require("../../utils/countryball");
 const { drawCard } = require("../../utils/card");
 const { player } = require("../../handlers/database.js");
+const { config } = require("../../handlers/config.js");
 
 const snowflake = require("@pwldev/discord-snowflake");
 
@@ -27,7 +28,7 @@ module.exports = async (client, interaction) => {
         if (interaction.customId == "catch_modal") {
             var cb = spawns.get(interaction.message.id);
             if (!cb) {
-                return await interaction.reply({ content: `<@${interaction.user.id}>, ya fui atrapado.` });
+                return await interaction.reply({ content: `<@${interaction.user.id}>, I was caught already!` });
             }
 
             var givenName = interaction.fields.getTextInputValue("catch_value")
@@ -38,7 +39,7 @@ module.exports = async (client, interaction) => {
                 performCatch(interaction, cb);
             } else {
                 return await interaction.reply({
-                    content: `<@${interaction.user.id}>, ¡nombre incorrecto!`, components: []
+                    content: `<@${interaction.user.id}> Wrong name!`, components: []
                 });
             }
         }
@@ -52,20 +53,15 @@ module.exports = async (client, interaction) => {
 
             const ballId = parseInt(interaction.values[0]);
             const currentPlayer = await player.get(userId);
-            var currentBall = undefined;
 
             if (!currentPlayer) {
-                return await interaction.editReply({ content: `<@${userId}> No tienes balls en el bot.`, ephemeral: true }); // pero q carajos, b
+                return await interaction.editReply({ content: `<@${userId}>, you don't have any ${config["collectible-name"]}s yet`, ephemeral: true }); 
             }
 
-            for (var ball of currentPlayer) {
-                if (ball.id == ballId) {
-                    currentBall = ball;
-                }
-            }
+            const currentBall = currentPlayer.find((b) => b.id == ballId);
 
             if (!currentBall) {
-                return await interaction.editReply({ content: "No se encontro esta ball" });
+                return await interaction.editReply({ content: `This ${config["collectible-name"]} was not found.` });
             }
 
             const card = await drawCard(
@@ -121,7 +117,7 @@ module.exports = async (client, interaction) => {
             try {
                 comando.runSlash(client, interaction, "/")
             } catch (e) {
-                interaction.reply({content: "Se produjo un error al ejecutar el comando. Contacte al desarrollador para resolver el problema.", ephemeral: true});
+                interaction.reply({content: "An error occured while trying to run this command.\nContact support if this persists.", ephemeral: true});
                 console.log(e);
                 return;
             }

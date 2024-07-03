@@ -2,27 +2,30 @@ const Discord = require("discord.js")
 const { config } = require("../../handlers/database.js");
 const { cooldowns, intervals } = require("../../utils/spawner.js");
 
+const { config } = require("../../handlers/database.js");
+const { config: settings } = require("../../handlers/config.js");
+
 module.exports = {
     name: "config",
     category: "dex",
-    description: "Configura a Testdex",
+    description: "Configure BallsDex",
     args: false,
     cmd: new Discord.SlashCommandBuilder() 
         .setName("config")
-        .setDescription("Configura a TestDex") 
+        .setDescription(`Set up ${settings["bot-name"]}`) 
         .setDefaultMemberPermissions(Discord.PermissionFlagsBits.ManageGuild)
         .addSubcommandGroup(s => s
             .setName("testdex")
-            .setDescription("Configurar TestDex")
+            .setDescription(`Set up ${settings["bot-name"]}`)
             .addSubcommand(e => e
                 .setName("enable")
-                .setDescription("Habilita a TestDex.")
-                .addChannelOption(c => c.setName("channel").setDescription("Canal en el cuál aparecerá las balls.").setRequired(true))
-                .addIntegerOption(i => i.setName("interval").setDescription("Intervalo de aparición (Minimo: 1, Máximo: 1440, Por defecto: 10).").setMinValue(1).setMaxValue(1440).setRequired(false))
+                .setDescription(`Enable ${settings["bot-name"]}`)
+                .addChannelOption(c => c.setName("channel").setDescription("Channel to spawn.").setRequired(true))
+                .addIntegerOption(i => i.setName("interval").setDescription("Interval for spawning (Min: 1, Max: 1440, Default: 10).").setMinValue(1).setMaxValue(1440).setRequired(false))
             )
             .addSubcommand(d => d
                 .setName("disable")
-                .setDescription("Deshabilita a TestDex.")
+                .setDescription(`Disabled ${settings["bot-name"]}`)
             )
     ),
     run: () => { return },
@@ -50,9 +53,9 @@ module.exports = {
                 
                 return await interaction.reply({
                     embeds: [{
-                        author: {name: "TestDex", icon_url: `${client.user.displayAvatarURL({size: 1024})}`},
-                        title: "TestDex activado",
-                        description: `TestDex se habilitó correctamente en el canal ${channel} cada **${interval}** minuto(s).`,
+                        author: {name: settings["bot-name"], icon_url: `${client.user.displayAvatarURL({size: 1024})}`},
+                        title: `${settings["bot-name"]} enabled`,
+                        description: `${settings["bot-name"]} successfully enabled in channel ${channel} every **${interval}** minute(s).`,
                     }] 
                 });
             }
@@ -64,9 +67,9 @@ module.exports = {
 
                 return await interaction.reply({
                     embeds: [{
-                        author: {name: "TestDex", icon_url: `${client.user.displayAvatarURL({size: 1024})}`},
-                        title: "TestDex deshabilitado",
-                        description: "Gracias por utilizar TestDex. Vuelve pronto a utilizarlo."
+                        author: {name: settings["bot-name"], icon_url: `${client.user.displayAvatarURL({size: 1024})}`},
+                        title: `${settings["bot-name"]} disabled`,
+                        description: `Thanks for using ${settings["bot-name"]}. Come back soon.`
                     }]
                 });
             }

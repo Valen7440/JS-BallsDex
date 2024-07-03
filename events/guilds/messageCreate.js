@@ -31,7 +31,7 @@ module.exports = (client, message) => {
     try {   
         cmd.run(client, message, args);
     } catch (e) {
-        message.reply({content: `Se produjo un error al ejecutar el comando. Contacte al desarrollador para resolver el problema.`})
+        message.reply({content: `An error occured while trying to run this command.\nContact support if this persists.` })
         console.warn(e);
     }
 }

@@ -1,7 +1,9 @@
 const Discord = require("discord.js");
 const { REST, Routes } = require("discord.js")
-const config = require("../config/config.json")
 const fs = require("fs");
+const yaml = require("js-yaml")
+
+const config = yaml.load(fs.readFileSync('./config.yml', 'utf-8'))
 
 /**
  * 
@@ -29,14 +31,14 @@ async function loadCommands(client){
 
     const rest = new REST({
         version: '10'
-    }).setToken(config.token);
+    }).setToken(config["token"]);
 
     (async () => {
         try {
             console.log('Started refreshing application (/) commands.');
 
             await rest.put(
-                Routes.applicationCommands(`${config.clientId}`), {
+                Routes.applicationCommands(`${config["client-id"]}`), {
                     body: client.slashArray
                 },
             );

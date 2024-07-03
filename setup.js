@@ -6,7 +6,14 @@ const template = `
 # original bot made by Laggron42
 
 # paste your token here
-token:
+token: 
+
+# client ID of your application
+# example: 1253441398146076732
+client-id:
+
+# add custom prefix
+prefix: b.
 `
 
 console.log("We've installed the required dependencies.");

@@ -1,5 +1,8 @@
 const Discord = require("discord.js")
-const config = require("../config/config.json")
+const fs = require("fs")
+const yaml = require("js-yaml")
+
+const config = yaml.load(fs.readFileSync('./config.yml', 'utf-8'))
 
 /**
  * 

@@ -1,7 +1,6 @@
 node_modules
 data
 package-lock.json
-./config/config.json
 ./assets/cards/hola.png
 ./assets/cards/pwl.png
 ./assets/spawn/hola.png

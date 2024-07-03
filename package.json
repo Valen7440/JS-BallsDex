@@ -15,12 +15,10 @@
     "@pwldev/discord-snowflake": "^1.0.4",
     "canvas": "^2.11.2",
     "colors": "^1.4.0",
-    "data-store": "^4.0.3",
     "discord.js": "^14.15.3",
     "glob": "^10.4.2",
     "js-yaml": "^4.1.0",
     "keyv": "^4.5.4",
-    "moongose": "^1.0.0",
     "yaml": "^2.4.5"
   }
 }

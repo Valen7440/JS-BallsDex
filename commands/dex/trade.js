@@ -96,7 +96,7 @@ module.exports = {
                 updateProposal(interaction, message, updateInterval)
             }, 15000);
 
-            await loadTradeComponents(interaction, message);
+            await loadTradeComponents(interaction, message, updateInterval);
         }
 
         if (subcommand == "add") {
@@ -431,7 +431,7 @@ async function updateProposal(interaction, message, interval) {
  * @param {Discord.Interaction} interaction
  * @param {Discord.Message} message
  */
-async function loadTradeComponents(interaction, message) {
+async function loadTradeComponents(interaction, message, interval) {
     const tradeData = getTrade(interaction);
 
     if (!tradeData) {
@@ -472,13 +472,13 @@ async function loadTradeComponents(interaction, message) {
                         const update = await message.edit({ embeds: [messageEmbed], components: [newRow] });
 
                         updateProposal(response, update); 
-                        return loadTradeComponents(response, update);
+                        return loadTradeComponents(response, update, interval);
                     }
                 } else {
                     await response.reply({ content: "You've already locked your proposal.", ephemeral: true });
                 } 
 
-                loadTradeComponents(response, message);
+                loadTradeComponents(response, message, interval);
             }
 
             if (response.customId == "reset_trade") {
@@ -487,7 +487,7 @@ async function loadTradeComponents(interaction, message) {
 
                 await response.reply({ content: "Your proposal has been reset.", ephemeral: true });
 
-                loadTradeComponents(response, message);
+                loadTradeComponents(response, message, interval);
             }
 
             if (response.customId == "cancel_trade") {
@@ -514,13 +514,14 @@ async function loadTradeComponents(interaction, message) {
 
                     await response.reply({ content: "You accepted your proposal.", ephemeral: true });
 
-                    loadTradeComponents(response, message);
+                    loadTradeComponents(response, message, interval);
                 } else {
                     return await response.reply({ content: "You've already accepted the trade.", ephemeral: true });
                 } 
             }
         }
     } catch (e) {
+        clearInterval(interval);
         console.error(e);
     }
 

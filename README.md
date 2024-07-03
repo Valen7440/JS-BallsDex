@@ -4,6 +4,10 @@ This bot is inspired from [BallsDex](https://github.com/Ballsdex-Team/BallsDex-D
 
 This code is a complete recreation of the bot, written with the [discord.js](https://github.com/discordjs/discord.js) library, by [PwLDev](https://github.com/PwLDev) and [Valen7440](https://github.com/Valen7440) and behaves exactly the same as BallsDex (does not include battles).
 
+## What's new?
+
+Check [the changelog](CHANGELOG.md) for the latest updates!
+
 ## Contributing
 
 Want to set up your environment? Check [the contribution guide](CONTRIBUTING.md).

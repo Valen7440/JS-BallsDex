@@ -76,6 +76,10 @@ Then the filename must be `hola.png`. Where it must be saved in `/assets/cards/`
 
 This rule also applies to custom regimes and economies. 
 
+#### Run your bot
+
+Run your bot using `node index.js`. Make sure your bot token is set in config.yml
+
 ### Data management
 
 This bot saves data in a SQLite local database, located in `/data` directory as default.

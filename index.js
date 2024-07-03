@@ -15,7 +15,6 @@ const client = new Discord.Client({
         Discord.GatewayIntentBits.GuildMembers,
         Discord.GatewayIntentBits.GuildMessages,
         Discord.GatewayIntentBits.MessageContent,
-        Discord.GatewayIntentBits.GuildPresences
     ],
     partials: [Discord.Partials.User, Discord.Partials.Channel, Discord.Partials.GuildMember, Discord.Partials.Message, Discord.Partials.Reaction],
     presence: {

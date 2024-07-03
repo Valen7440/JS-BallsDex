@@ -1,12 +1,7 @@
 const Discord = require("discord.js")
 const { player } = require("../../handlers/database.js"); 
 const snowflake = require("@pwldev/discord-snowflake"); 
-
-// hola denuevo pwl hola valen el 🐐 🐐 ahora intenta escribir para solucionar el bug q se lageo el vsengsaas todo humilde 🤑
-
-// Hola Pwl... Misión Final. Hola valen 🐐 ¿Cómo va? Bien aunque un poco con miedo porque no se si lo lograre tienes intentos infinitos. bueeee XD ¿Pwl tendra flojera para hacer coutnrybot 2? está es la ultima mision a hacer para countrybot 2 (y código abierto, claro) "javascriptnizicamos". XD
-// hola valen the 🐐 hola pwl the 🐐
-const trades = {}; // dict 🐐   🤑
+const trades = {}; 
 
 module.exports = {
     name: "trade",
@@ -32,10 +27,6 @@ module.exports = {
             const trader1 = interaction.user;
             const trader2 = interaction.options.getUser("user", true);
 
-            const commands = await client.application.commands.fetch();
-
-            const trade_add_command = commands.find(c => c.name === "/trade add")?.id;
-
             if (trader2.bot) {
                 return await interaction.reply({content: `No puedes tradear con bots.`, ephemeral: true})
             } 
@@ -60,7 +51,7 @@ module.exports = {
             const embed = new Discord.EmbedBuilder()
             .setTitle("BallsDex trading")
             .setDescription(`
-            Add or remove countryballs you want to propose to the other player using the ${trade_add_command} and /trade remove commands.\n
+            Add or remove countryballs you want to propose to the other player using the /trade add and /trade remove commands.\n
             Once you're finished, click the lock button below to confirm your proposal.\n
             You can also lock with nothing if you're receiving a gift.
             `)
@@ -104,7 +95,7 @@ module.exports = {
             const message = await interaction.editReply({ embeds: [embed], components: [row] });
             const updateInterval = setInterval(() => {
                 updateProposal(interaction, message, updateInterval)
-            }, 10000); // vamos a ponerle 10 segundos a ver q pasa ok
+            }, 15000);
 
             await loadTradeComponents(interaction, message);
         }
@@ -618,10 +609,3 @@ function getTrader(tradeData, response) {
         return tradeData.trader2;
     }
 }
-
-
-// Python:
-// async def perform_trade():
-// JS:
-// async function perform_trade(){
-//}

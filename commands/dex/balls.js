@@ -28,7 +28,7 @@ module.exports = {
         const subcommand = interaction.options.getSubcommand()
 
         if (subcommand == "info") {
-            const ballId = interaction.options.getInteger("ball", true);
+            const ballId = interaction.options.getInteger(settings["collectible-name"], true);
             var currentPlayer = await player.get(interaction.user.id);
     
             if (!currentPlayer) {
@@ -185,7 +185,7 @@ module.exports = {
             const currentPlayer = await player.get(user.id);
 
             if (!currentPlayer) {
-                return await interaction.reply({ content: `<@${user.id}>, has any ${settings["collectible-name"]}s.`, ephemeral: true });
+                return await interaction.reply({ content: `That user does not have any ${settings["collectible-name"]}s.`, ephemeral: true });
             }
 
             await interaction.deferReply();
@@ -250,7 +250,7 @@ module.exports = {
         }
 
         if (subcommand == "favorite") {
-            const ballId = interaction.options.getInteger("ball", true);
+            const ballId = interaction.options.getInteger(settings["collectible-name"], true);
             var currentPlayer = await player.get(interaction.user.id);
             var currentBall = undefined;
     
@@ -292,7 +292,7 @@ module.exports = {
 
         if (subcommand == "give") {
             const user = interaction.options.getUser("user", true);
-            const ballId = interaction.options.getInteger("ball", true);
+            const ballId = interaction.options.getInteger(settings["collectible-name"], true);
 
             const oldPlayer = await player.get(interaction.user.id);
             const newPlayer = await player.get(user.id);

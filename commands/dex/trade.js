@@ -100,7 +100,7 @@ module.exports = {
         }
 
         if (subcommand == "add") {
-            const ballId = interaction.options.getInteger("ball", true);
+            const ballId = interaction.options.getInteger(settings["collectible-name"], true);
             var currentPlayer = await player.get(interaction.user.id);
     
             if (!currentPlayer) {
@@ -143,7 +143,7 @@ module.exports = {
         }
 
         if (subcommand == "remove") {
-            const ballId = interaction.options.getInteger("ball", true);
+            const ballId = interaction.options.getInteger(settings["collectible-name"], true);
             var currentPlayer = await player.get(interaction.user.id);
     
             if (!currentPlayer) {

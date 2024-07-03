@@ -39,7 +39,7 @@ module.exports = {
         const channel = interaction.options.get("channel")?.channel;
         const interval = interaction.options.get("interval")?.value ? parseInt(interaction.options.get("interval")?.value) : 10;
 
-        if (option === "testdex") {
+        if (option === settings["bot-name"].toLowerCase()) {
             if (options === "enable") {
                 await config.set(interaction.guildId, {
                     "channel": channel.id,

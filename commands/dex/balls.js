@@ -17,7 +17,7 @@ module.exports = {
     .addSubcommand(s => s.setName("completion").setDescription("View your completion").addUserOption(u => u.setName("user").setDescription("User to view completion").setRequired(false)))
     .addSubcommand(s => s.setName("list").setDescription(`List your ${settings["collectible-name"]}s`).addUserOption(o => o.setName("user").setDescription(`User to inspect ${settings["collectible-name"]}s`).setRequired(false)))
     .addSubcommand(s => s.setName("favorite").setDescription(`Set a ${settings["collectible-name"]} as favorite`).addIntegerOption(o => o.setName(settings["collectible-name"]).setDescription(`${settings["collectible-name"]} to inspect`).setAutocomplete(true).setRequired(true)))
-    .addSubcommand(s => s.setName("give").setDescription(`Give a ${settings["collectible-name"]} to a user.`).addUserOption(o => o.setName("user").setDescription("User to give.").setRequired(true)).addIntegerOption(o => o.setName("ball").setDescription(`${settings["collectible-name"]} to inspect`).setAutocomplete(true).setRequired(true))),
+    .addSubcommand(s => s.setName("give").setDescription(`Give a ${settings["collectible-name"]} to a user.`).addUserOption(o => o.setName("user").setDescription("User to give.").setRequired(true)).addIntegerOption(o => o.setName(settings["collectible-name"]).setDescription(`${settings["collectible-name"]} to inspect`).setAutocomplete(true).setRequired(true))),
     run: () => { return },
     /**
      * 

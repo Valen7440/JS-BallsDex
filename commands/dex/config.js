@@ -13,7 +13,7 @@ module.exports = {
         .setDescription(`Set up ${settings["bot-name"]}`) 
         .setDefaultMemberPermissions(Discord.PermissionFlagsBits.ManageGuild)
         .addSubcommandGroup(s => s
-            .setName("testdex")
+            .setName(settings["bot-name"])
             .setDescription(`Set up ${settings["bot-name"]}`)
             .addSubcommand(e => e
                 .setName("enable")

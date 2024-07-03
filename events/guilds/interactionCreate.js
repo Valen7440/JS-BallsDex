@@ -3,7 +3,7 @@ const { sendModal, performCatch, spawns } = require("../../utils/countryball");
 const { drawCard } = require("../../utils/card");
 const { player } = require("../../handlers/database.js");
 
-const snowflake = require("@pwldev/discord-snowflake"); // se te olvido importar el paquete 🐐🐐 el mejor paquet
+const snowflake = require("@pwldev/discord-snowflake");
 
 /**
  * @param {Discord.Client} client
@@ -54,7 +54,6 @@ module.exports = async (client, interaction) => {
             const currentPlayer = await player.get(userId);
             var currentBall = undefined;
 
-            // Snowflake = Copo de nieve ❄❄
             if (!currentPlayer) {
                 return await interaction.editReply({ content: `<@${userId}> No tienes balls en el bot.`, ephemeral: true }); // pero q carajos, b
             }

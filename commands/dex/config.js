@@ -1,8 +1,6 @@
 const Discord = require("discord.js")
 const { config } = require("../../handlers/database.js");
 const { cooldowns, intervals } = require("../../utils/spawner.js");
-
-const { config } = require("../../handlers/database.js");
 const { settings } = require("../../handlers/config.js");
 
 module.exports = {

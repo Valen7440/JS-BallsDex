@@ -40,10 +40,7 @@ async function spawnManager(client) {
         }
 
         var cooldown = cooldowns.get(message.guildId);
-        console.log("Cooldown", cooldowns.get(message.guildId))
-        
         let delta = (cooldown - Math.floor(message.createdTimestamp / 1000));
-        console.log(delta)
 
         if (delta < 0) {
             var interval = intervals.get(message.guildId);

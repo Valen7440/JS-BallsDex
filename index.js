@@ -6,7 +6,7 @@ const BotUtils = require("./utils/loadFiles.js")
 const { loadEvents } = require("./handlers/events.js")
 const { loadCommands } = require("./handlers/slashCommands.js")
 const { loadPrefixCommands } = require("./handlers/commands.js");
-const { config } = require("./handlers/config.js");
+const { settings } = require("./handlers/config.js");
  
 const client = new Discord.Client({
     intents: [
@@ -26,10 +26,10 @@ client.commands = new Discord.Collection();
 client.slashcommands = new Discord.Collection();
 client.slashArray = [];
 client.utils = new BotUtils(client);
-client.config = config;
+client.config = settings;
 
 loadEvents(client);
 loadCommands(client);
 loadPrefixCommands(client);
 
-client.login(config["token"]) 
+client.login(settings["token"]) 

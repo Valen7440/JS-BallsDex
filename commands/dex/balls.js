@@ -1,23 +1,23 @@
 const Discord = require("discord.js");
 const { player } = require("../../handlers/database.js"); 
 const { drawCard } = require("../../utils/card");
-const { config } = require("../../handlers/config.js");
+const { settings } = require("../../handlers/config.js");
 
 const snowflake = require("@pwldev/discord-snowflake"); 
 
 module.exports = {
-    name: config["command-name"], 
+    name: settings["command-name"], 
     category: "dex",
     description: "Balls",
     args: false,
     cmd: new Discord.SlashCommandBuilder()
-    .setName(config["command-name"]).setDescription("Collectibles")
-    .addSubcommand(s => s.setName("info").setDescription(`View info of a ${config["collectible-name"]}`).addIntegerOption(o => o.setName(config["collectible-name"]).setDescription(`${config["collectible-name"]} to inspect`).setAutocomplete(true).setRequired(true)))
-    .addSubcommand(s => s.setName("last").setDescription(`View you last catched ${config["collectible-name"]}`))
+    .setName(settings["command-name"]).setDescription("Collectibles")
+    .addSubcommand(s => s.setName("info").setDescription(`View info of a ${settings["collectible-name"]}`).addIntegerOption(o => o.setName(settings["collectible-name"]).setDescription(`${settings["collectible-name"]} to inspect`).setAutocomplete(true).setRequired(true)))
+    .addSubcommand(s => s.setName("last").setDescription(`View you last catched ${settings["collectible-name"]}`))
     .addSubcommand(s => s.setName("completion").setDescription("View your completion").addUserOption(u => u.setName("user").setDescription("User to view completion").setRequired(false)))
-    .addSubcommand(s => s.setName("list").setDescription(`List your ${config["collectible-name"]}s`).addUserOption(o => o.setName("user").setDescription(`User to inspect ${config["collectible-name"]}s`).setRequired(false)))
-    .addSubcommand(s => s.setName("favorite").setDescription(`Set a ${config["collectible-name"]} as favorite`).addIntegerOption(o => o.setName(config["collectible-name"]).setDescription(`${config["collectible-name"]} to inspect`).setAutocomplete(true).setRequired(true)))
-    .addSubcommand(s => s.setName("give").setDescription(`Give a ${config["collectible-name"]} to a user.`).addUserOption(o => o.setName("user").setDescription("User to give.").setRequired(true)).addIntegerOption(o => o.setName("ball").setDescription(`${config["collectible-name"]} to inspect`).setAutocomplete(true).setRequired(true))),
+    .addSubcommand(s => s.setName("list").setDescription(`List your ${settings["collectible-name"]}s`).addUserOption(o => o.setName("user").setDescription(`User to inspect ${settings["collectible-name"]}s`).setRequired(false)))
+    .addSubcommand(s => s.setName("favorite").setDescription(`Set a ${settings["collectible-name"]} as favorite`).addIntegerOption(o => o.setName(settings["collectible-name"]).setDescription(`${settings["collectible-name"]} to inspect`).setAutocomplete(true).setRequired(true)))
+    .addSubcommand(s => s.setName("give").setDescription(`Give a ${settings["collectible-name"]} to a user.`).addUserOption(o => o.setName("user").setDescription("User to give.").setRequired(true)).addIntegerOption(o => o.setName("ball").setDescription(`${settings["collectible-name"]} to inspect`).setAutocomplete(true).setRequired(true))),
     run: () => { return },
     /**
      * 
@@ -32,13 +32,13 @@ module.exports = {
             var currentPlayer = await player.get(interaction.user.id);
     
             if (!currentPlayer) {
-                return await interaction.reply({ content: `You haven't collected any ${config["collectible-name"]} yet.` });
+                return await interaction.reply({ content: `You haven't collected any ${settings["collectible-name"]} yet.` });
             }
     
             const currentBall = currentPlayer.find((b) => b.id == ballId);
 
             if (!currentBall) {
-                return await interaction.reply({ content: `That ${config["collectible-name"]} was not found, try to use the autocomplete function.`, ephemeral: true });
+                return await interaction.reply({ content: `That ${settings["collectible-name"]} was not found, try to use the autocomplete function.`, ephemeral: true });
             }
 
             await interaction.deferReply();
@@ -77,13 +77,13 @@ module.exports = {
             var currentPlayer = await player.get(interaction.user.id);
 
             if (!currentPlayer) {
-                return await interaction.reply({ content: `You haven't collected any ${config["collectible-name"]} yet.` });
+                return await interaction.reply({ content: `You haven't collected any ${settings["collectible-name"]} yet.` });
             }
 
             const currentBall = currentPlayer[currentPlayer.length - 1];
     
             if (!currentBall) {
-                return await interaction.reply({ content: `No ${config["collectible-name"]} was found.`, ephemeral: true });
+                return await interaction.reply({ content: `No ${settings["collectible-name"]} was found.`, ephemeral: true });
             }
 
             await interaction.deferReply();
@@ -162,11 +162,11 @@ module.exports = {
                     }
                 }
             } else {
-                gotText = `You haven't collected any ${config["collectible-name"]} yet.`;
+                gotText = `You haven't collected any ${settings["collectible-name"]} yet.`;
             }
 
             if (cbNames.length == 0) {
-                cbText = `:tada: **__Congrats, you collected all the ${config["collectible-name"]}s__** :tada:`
+                cbText = `:tada: **__Congrats, you collected all the ${settings["collectible-name"]}s__** :tada:`
             }
             
 
@@ -175,7 +175,7 @@ module.exports = {
             const embed = new Discord.EmbedBuilder()
             .setAuthor({ name: targetUserObj.user.displayName, iconURL: targetUserObj.user.displayAvatarURL({ size: 512 }) })
             .setColor(Discord.Colors.Blurple)
-            .setDescription(`${config["bot-name"]} progression: *${percentage}%*\n\n**__Owned ${config["collectible-name"]}s__**\n${gotText}\n\n${gotNames.length >= countryballs.length ? "" : `**__Missing ${config["collectible-name"]}s__**\n`}${cbText}`)
+            .setDescription(`${settings["bot-name"]} progression: *${percentage}%*\n\n**__Owned ${settings["collectible-name"]}s__**\n${gotText}\n\n${gotNames.length >= countryballs.length ? "" : `**__Missing ${settings["collectible-name"]}s__**\n`}${cbText}`)
             
             return await interaction.editReply({ embeds: [embed] });
         }
@@ -185,7 +185,7 @@ module.exports = {
             const currentPlayer = await player.get(user.id);
 
             if (!currentPlayer) {
-                return await interaction.reply({ content: `<@${user.id}>, has any ${config["collectible-name"]}s.`, ephemeral: true });
+                return await interaction.reply({ content: `<@${user.id}>, has any ${settings["collectible-name"]}s.`, ephemeral: true });
             }
 
             await interaction.deferReply();
@@ -242,10 +242,10 @@ module.exports = {
             const row2 = new Discord.ActionRowBuilder().addComponents(cbMenu)
 
             if (currentPlayer.length > 25) {
-                const response = await interaction.editReply({ content: `Viewing <@${user.id}>'s ${config["collectible-name"]}s.`, components: [actions, row2] })
+                const response = await interaction.editReply({ content: `Viewing <@${user.id}>'s ${settings["collectible-name"]}s.`, components: [actions, row2] })
                 await generateListResponse(interaction, response, currentPlayer, user.id);
             } else {
-                return await interaction.editReply({ content: `Viewing <@${user.id}>'s ${config["collectible-name"]}s.`, components: [row2] });
+                return await interaction.editReply({ content: `Viewing <@${user.id}>'s ${settings["collectible-name"]}s.`, components: [row2] });
             }
         }
 
@@ -255,7 +255,7 @@ module.exports = {
             var currentBall = undefined;
     
             if (!currentPlayer) {
-                return await interaction.reply({ content: `You haven't collected any ${config["collectible-name"]} yet.`, ephemeral: true });
+                return await interaction.reply({ content: `You haven't collected any ${settings["collectible-name"]} yet.`, ephemeral: true });
             }
     
             for (var ball of currentPlayer) {
@@ -268,7 +268,7 @@ module.exports = {
             const index = currentPlayer.indexOf(currentBall);
     
             if (!currentBall || index == -1) {
-                return await interaction.editReply({ content: `No ${config["collectible-name"]} was found, use the autocomplete function.`, ephemeral: true });
+                return await interaction.editReply({ content: `No ${settings["collectible-name"]} was found, use the autocomplete function.`, ephemeral: true });
             }
 
             if (currentBall["favorite"]) {
@@ -298,15 +298,15 @@ module.exports = {
             const newPlayer = await player.get(user.id);
 
             if (user.bot) {
-                return await interaction.reply({content: `You can't give ${config["collectible-name"]}s to bots.`, ephemeral: true})
+                return await interaction.reply({content: `You can't give ${settings["collectible-name"]}s to bots.`, ephemeral: true})
             }
 
             if (interaction.user === user) {
-                return await interaction.reply({content: `You can't give ${config["collectible-name"]}s to yourself.`, ephemeral: true})
+                return await interaction.reply({content: `You can't give ${settings["collectible-name"]}s to yourself.`, ephemeral: true})
             }
 
             if (!oldPlayer) {
-                return await interaction.reply({ content: `<@${interaction.user.id}> has any ${config["collectible-name"]}s yet.`, ephemeral: true });
+                return await interaction.reply({ content: `<@${interaction.user.id}> has any ${settings["collectible-name"]}s yet.`, ephemeral: true });
             }
 
             const currentBall = oldPlayer.find((b) => b.id == ballId);
@@ -315,7 +315,7 @@ module.exports = {
             const index = oldPlayer.indexOf(currentBall);
 
             if (!currentBall || index == -1) {
-                return await interaction.reply({ content: `That ${config["collectible-name"]} was found, use the autocomplete function.`, ephemeral: true });
+                return await interaction.reply({ content: `That ${settings["collectible-name"]} was found, use the autocomplete function.`, ephemeral: true });
             }
 
             // Reset ball values.

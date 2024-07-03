@@ -1,0 +1,25 @@
+{
+  "name": "testdexjs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "setup": "npm i && node setup.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@keyv/sqlite": "^3.6.7",
+    "@pwldev/discord-snowflake": "^1.0.4",
+    "canvas": "^2.11.2",
+    "colors": "^1.4.0",
+    "data-store": "^4.0.3",
+    "discord.js": "^14.15.3",
+    "glob": "^10.4.2",
+    "keyv": "^4.5.4",
+    "moongose": "^1.0.0",
+    "yaml": "^2.4.5"
+  }
+}

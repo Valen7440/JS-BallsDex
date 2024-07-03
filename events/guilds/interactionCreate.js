@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const { sendModal, performCatch, spawns } = require("../../utils/countryball");
 const { drawCard } = require("../../utils/card");
 const { player } = require("../../handlers/database.js");
-const { config } = require("../../handlers/config.js");
+const { settings } = require("../../handlers/config.js");
 
 const snowflake = require("@pwldev/discord-snowflake");
 
@@ -55,13 +55,13 @@ module.exports = async (client, interaction) => {
             const currentPlayer = await player.get(userId);
 
             if (!currentPlayer) {
-                return await interaction.editReply({ content: `<@${userId}>, you don't have any ${config["collectible-name"]}s yet`, ephemeral: true }); 
+                return await interaction.editReply({ content: `<@${userId}>, you don't have any ${settings["collectible-name"]}s yet`, ephemeral: true }); 
             }
 
             const currentBall = currentPlayer.find((b) => b.id == ballId);
 
             if (!currentBall) {
-                return await interaction.editReply({ content: `This ${config["collectible-name"]} was not found.` });
+                return await interaction.editReply({ content: `This ${settings["collectible-name"]} was not found.` });
             }
 
             const card = await drawCard(

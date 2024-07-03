@@ -3,7 +3,8 @@ const snowflake = require("@pwldev/discord-snowflake");
 const fs = require("node:fs");
 const path = require("node:path")
 const { countryballs } = require("../config/countryballs.json")
-const { player, metrics } = require("../handlers/database")
+const { player, metrics } = require("../handlers/database");
+const { settings } = require("../../handlers/config.js");
 
 var spawns = new Map();
 
@@ -36,7 +37,7 @@ async function spawnRandom(channel) {
     var code = snowflake.generate(Date.now()); 
     var components = new Discord.ActionRowBuilder();
     var button = new Discord.ButtonBuilder({
-        label: "Atrápame",
+        label: "Catch me!",
         style: Discord.ButtonStyle.Primary, 
         custom_id: `catch_${code}`
     });
@@ -44,7 +45,7 @@ async function spawnRandom(channel) {
     components.addComponents(button);
 
     var file = new Discord.AttachmentBuilder(fs.readFileSync(path.resolve(`./assets/spawn/${cb.names[0]}.png`))) 
-    var message = await channel.send({ content: "¡Aparecio un Countryball!", components: [components], files: [file] })
+    var message = await channel.send({ content: `A wild ${settings["collectible-name"]} appeared!`, components: [components], files: [file] })
 
     spawns.set(message.id, cb);
 
@@ -52,7 +53,7 @@ async function spawnRandom(channel) {
         if (spawns.has(message.id)) { 
             var components = new Discord.ActionRowBuilder();
             var button = new Discord.ButtonBuilder({
-                label: "Atrápame",
+                label: "Catch me!",
                 style: Discord.ButtonStyle.Primary,
                 custom_id: "despawned_ball",
                 disabled: true
@@ -62,7 +63,7 @@ async function spawnRandom(channel) {
 
             if (message) {
                 
-                message.edit({content: `¡Aparecio un Countryball!`, components: [components] });
+                message.edit({content: `A wild ${settings["collectible-name"]} appeared!`, components: [components] });
             } 
         }
     }, (3 * 60000));
@@ -74,11 +75,11 @@ async function spawnRandom(channel) {
  */
 async function sendModal(response, countryball) {
     var modal = new Discord.ModalBuilder()
-    .setTitle("Atrapa este countryball")    
+    .setTitle(`Catch this ${settings["collectible-name"]}`)    
     .setCustomId(`catch_modal`);
     
     var input = new Discord.TextInputBuilder()
-    .setLabel("Nombre del countryball")
+    .setLabel(`Name of the ${settings["collectible-name"]}`)
     .setStyle(Discord.TextInputStyle.Short)
     .setCustomId("catch_value")
     .setValue("")
@@ -106,7 +107,7 @@ async function performCatch(response, countryball) {
 
     var components = new Discord.ActionRowBuilder();
     var button = new Discord.ButtonBuilder({
-        label: "Atrápame",
+        label: "Catch me!",
         style: Discord.ButtonStyle.Primary,
         custom_id: "catched_ball",
         disabled: true
@@ -148,7 +149,7 @@ async function performCatch(response, countryball) {
     metrics.set("count", countryballId);
  
     await response.message.edit({ components: [components] });
-    await response.editReply(`<@${response.user.id}>, ¡has atrapado a ${countryball.renderedName}! (\`#${countryballId.toString(16)}, ${hp}/${atk}\`)`);
+    await response.editReply(`<@${response.user.id}>, you caught **${countryball.renderedName}**! (\`#${countryballId.toString(16)}, ${hp}/${atk}\`)`);
 } 
 
 module.exports = { getRandom, spawnRandom, sendModal, performCatch, spawns }

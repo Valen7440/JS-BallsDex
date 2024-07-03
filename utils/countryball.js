@@ -4,7 +4,7 @@ const fs = require("node:fs");
 const path = require("node:path")
 const { countryballs } = require("../config/countryballs.json")
 const { player, metrics } = require("../handlers/database");
-const { settings } = require("../../handlers/config.js");
+const { settings } = require("../handlers/config.js");
 
 var spawns = new Map();
 

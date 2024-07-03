@@ -17,7 +17,8 @@ client-id:
 prefix: b.
 
 # collectible name
-collectible-name: countryballs
+# place it as singular as plural forms of this word are automatic
+collectible-name: countryball
 
 # bot name
 bot-name: BallsDex

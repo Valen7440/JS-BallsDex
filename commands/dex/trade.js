@@ -483,6 +483,13 @@ async function loadTradeComponents(interaction, message, interval) {
 
             if (response.customId == "reset_trade") {
                 var trader = getCurrentTrader(response);
+
+                if (trader.locked) {
+                    await response.reply({ content: "You can't modify your proposal as it is locked. You can cancel the trade instead.", ephemeral: true });
+                    loadTradeComponents(response, message, interval);
+                    return;
+                }
+
                 trader.proposal = [];
 
                 await response.reply({ content: "Your proposal has been reset.", ephemeral: true });

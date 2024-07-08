@@ -3,16 +3,9 @@ const { spawnRandom } = require("./countryball");
 const { config } = require("../handlers/database");
 const { randInt } = require("./utils")
 
-const cooldowns = new Map();
+const channels = new Map();
+const spawners = new Map();
 const intervals = new Map(); 
-
-function resetCooldown(guild) {
-
-}
-
-let print = (value) => {
-    console.log(`${value}`)
-} 
 
 /**
  * BallsDex Spawn Manager
@@ -29,22 +22,34 @@ async function spawnManager(client) {
         var interval = parseInt(data.interval) 
 
         intervals.set(guild.id, (interval * 60))
-        cooldowns.set(guild.id, (Math.round(Date.now() / 1000) + ((interval * 60) * gainCalc))) 
+        spawners.set(guild.id, {
+            cooldown: (Math.round(Date.now() / 1000) + ((interval * 60) * gainCalc)),
+            channel: data.channel
+        });
     });
 
     client.on("messageCreate", (message) => {
         if (message.author.bot) return;
 
-        if (!cooldowns.has(message.guildId)) {
+        if (!spawners.has(message.guildId)) {
             return; 
         }
 
-        var cooldown = cooldowns.get(message.guildId);
+        var cooldown = spawners.get(message.guildId).cooldown;
+        var channel = spawners.get(message.guildId).channel;
+
+        if (channel != message.channel.id) {
+            return;
+        }
+
         let delta = (cooldown - Math.floor(message.createdTimestamp / 1000));
 
         if (delta < 0) {
             var interval = intervals.get(message.guildId);
-            cooldowns.set(message.guildId, Math.round(Date.now() / 1000) + interval); 
+            spawners.set(message.guildId, {
+                cooldown: Math.round(Date.now() / 1000) + interval,
+                channel: channel
+            }); 
 
             setTimeout(() => {
                 spawnRandom(message.channel);
@@ -53,4 +58,4 @@ async function spawnManager(client) {
     }); 
 }
 
-module.exports = { spawnManager, cooldowns, intervals };
+module.exports = { spawnManager, spawners, intervals };

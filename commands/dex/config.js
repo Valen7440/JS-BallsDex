@@ -1,6 +1,6 @@
 const Discord = require("discord.js")
 const { config } = require("../../handlers/database.js");
-const { cooldowns, intervals } = require("../../utils/spawner.js");
+const { spawners, intervals } = require("../../utils/spawner.js");
 const { settings } = require("../../handlers/config.js");
 
 module.exports = {
@@ -47,7 +47,7 @@ module.exports = {
                 });
 
                 intervals.set(interaction.guildId, (interval * 60))
-                cooldowns.set(interaction.guildId, Math.round(Date.now() / 1000) + (interval * 60)) 
+                spawners.set(interaction.guildId, Math.round(Date.now() / 1000) + (interval * 60)) 
                 
                 return await interaction.reply({
                     embeds: [{
@@ -61,7 +61,7 @@ module.exports = {
                 await config.delete(interaction.guildId);
 
                 intervals.delete(interaction.guildId);
-                cooldowns.delete(interaction.guildId);  
+                spawners.delete(interaction.guildId);  
 
                 return await interaction.reply({
                     embeds: [{

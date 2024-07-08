@@ -47,7 +47,10 @@ module.exports = {
                 });
 
                 intervals.set(interaction.guildId, (interval * 60))
-                spawners.set(interaction.guildId, Math.round(Date.now() / 1000) + (interval * 60)) 
+                spawners.set(interaction.guildId, {
+                    "snowflake": Math.round(Date.now() / 1000) + (interval * 60),
+                    "channel": channel.id
+                });
                 
                 return await interaction.reply({
                     embeds: [{

@@ -35,10 +35,10 @@ async function spawnManager(client) {
             return; 
         }
 
-        var cooldown = spawners.get(message.guildId).cooldown;
-        var channel = spawners.get(message.guildId).channel;
+        var cooldown = spawners.get(message.guildId)?.cooldown;
+        var channel = spawners.get(message.guildId)?.channel;
 
-        if (channel != message.channel.id) {
+        if (message.channel.id != channel) {
             return;
         }
 

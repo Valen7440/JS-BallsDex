@@ -23,7 +23,7 @@ async function spawnManager(client) {
 
         intervals.set(guild.id, (interval * 60))
         spawners.set(guild.id, {
-            cooldown: (Math.round(Date.now() / 1000) + ((interval * 60) * gainCalc)),
+            snowflake: (Math.round(Date.now() / 1000) + ((interval * 60) * gainCalc)),
             channel: data.channel
         });
     });
@@ -35,7 +35,7 @@ async function spawnManager(client) {
             return; 
         }
 
-        var cooldown = spawners.get(message.guildId)?.cooldown;
+        var cooldown = spawners.get(message.guildId)?.snowflake;
         var channel = spawners.get(message.guildId)?.channel;
 
         if (message.channel.id != channel) {
@@ -47,7 +47,7 @@ async function spawnManager(client) {
         if (delta < 0) {
             var interval = intervals.get(message.guildId);
             spawners.set(message.guildId, {
-                cooldown: Math.round(Date.now() / 1000) + interval,
+                snowflake: Math.round(Date.now() / 1000) + interval,
                 channel: channel
             }); 
 

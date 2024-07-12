@@ -574,36 +574,34 @@ async function performTrade(interaction) {
         player2.splice(index, 1);
     }
 
+    var newArray2 = [];
     for (const ball of balls1) {
-        console.log(ball.countryball)
         if (!player2) {
-            var newArray = [];
-            newArray.push(ball); 
-
-            await player.set(tradeData.trader2.id, newArray);
+            newArray2.push(ball);
         } else {
             player2.push(ball);
-
-            await player.set(tradeData.trader2.id, player2);
         }
-
-        
     }
 
+    var newArray1 = [];
     for (const ball of balls2) {
-        console.log(ball.countryball)
-
         if (!player1) {
-            var newArray = [];
-            newArray.push(ball); 
-
-            await player.set(tradeData.trader1.id, newArray);
+            newArray1.push(ball);
         } else {
             player1.push(ball);
-
-            await player.set(tradeData.trader1.id, player1);
         }
+    }
 
+    if (newArray1.length > 0) {
+        await player.set(tradeData.trader1.id, newArray1);
+    } else {
+        await player.set(tradeData.trader2.id, player1);
+    }
+
+    if (newArray2.length > 0) {
+        await player.set(tradeData.trader2.id, newArray2);
+    } else {
+        await player.set(tradeData.trader2.id, player2);
     }
 }
 

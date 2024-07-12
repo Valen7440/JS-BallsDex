@@ -126,10 +126,6 @@ module.exports = {
             const currentPlayer = await player.get(targetUserId); 
             const { countryballs } = require("../../config/countryballs.json");
 
-            // if (!currentPlayer) {
-            //     return await interaction.reply({ content: "You haven't collected any countryball yet.", ephemeral: true });
-            // }
-
             await interaction.deferReply();
 
             var cbNames = [];
@@ -137,24 +133,11 @@ module.exports = {
             var cbText = "";
             var gotText = "";
 
-            for (const countryball of countryballs) {
-                cbNames.push(countryball.names[0]);
-
-                const emoji = client.emojis.cache.get(countryball.emoji);
-                cbText += `${emoji}`;
-            }
-
             if (currentPlayer) {
                 for (const collected of currentPlayer) {
                     const cbName = collected.countryball.names[0];
 
-                    if (
-                        cbNames.includes(cbName) &&
-                        !gotNames.includes(cbName)
-                    ) {
-                        const cbIndex = cbNames.indexOf(cbName);
-                        cbNames.splice(cbIndex, 1);
-
+                    if (!gotNames.includes(cbName)) { 
                         gotNames.push(cbName);
 
                         const emoji = client.emojis.cache.get(collected.countryball.emoji);
@@ -163,6 +146,15 @@ module.exports = {
                 }
             } else {
                 gotText = `You haven't collected any ${settings["collectible-name"]} yet.`;
+            }
+
+            for (const countryball of countryballs) {
+                if (!gotNames.includes(countryball.names[0])) {
+                    cbNames.push(countryball.names[0]);
+
+                    const emoji = client.emojis.cache.get(countryball.emoji);
+                    cbText += `${emoji}`;
+                }
             }
 
             if (cbNames.length == 0) {

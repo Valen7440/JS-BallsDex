@@ -34,8 +34,9 @@ async function loadCommands(client){
     }).setToken(config["token"]);
 
     var clientId = config["client-id"];
-    if (clientId == "number") {
-        clientId = config["client-id"].toString();
+    if (typeof clientId !== "string") {
+        console.error(`Client ID is not a String, convert to String please\nExample: "643945264868098049".` .red)
+        return process.exit(1);
     }
 
     (async () => {
